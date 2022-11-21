@@ -13,6 +13,7 @@
 
 void kirikou_start(obj* kirikou){
     NF_CreateSprite(1, kirikou->id, kirikou->sprid, kirikou->palid, kirikou->x, kirikou->y);
+    player = kirikou;
 }
 
 void kirikou_update(obj* kirikou){

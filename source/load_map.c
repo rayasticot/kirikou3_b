@@ -62,7 +62,7 @@ void load_map(map* mape){
                 kirikou_start(objbuf);
                 break;
             case 1:
-                NF_CreateSprite(1, objbuf->id, objbuf->id, 1, objbuf->x, objbuf->y);
+                npc_start(objbuf);
                 break;
             case 3:
             case 4:

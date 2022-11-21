@@ -13,8 +13,20 @@ int cam_x;
 int cam_y;
 
 map* curmap;
+obj* player;
 
-#include "teststruct.h"
+u16_f timer;
+
+bool checkCollision(int x1, int y1, int sx1, int sy1, int x2, int y2, int sx2, int sy2){
+	if(x1+sx1 > x2 && x1 < x2+sx2){
+		if(y1+sy1 > y2 && y1 < y2+sy2){
+			return true;
+		}
+	}
+	return false;
+}
+
+//#include "teststruct.h"
 #include "vars.h"
 #include "functions.h"
 
@@ -48,7 +60,8 @@ int main(int argc, char **argv){
 		oamUpdate(&oamSub);
 
 		scanKeys();
-        kirikou_update(&player);
-        
+        updateobj();
+		
+		if(timer != 0) timer--;
     }
 }

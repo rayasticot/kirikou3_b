@@ -35,7 +35,7 @@ void updateobj(){
             kirikou_update(objbuf);
             break;
         case 1:
-            //update_npc(objbuf);
+            npc_update(objbuf);
             break;
         /*case 3:
             EvilUpdate(objbuf);

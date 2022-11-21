@@ -55,7 +55,7 @@ void load_map(map* mape){
     load_sprites(mape);
 
     objbuf = mape->firstobj;
-	mmLoad(1);
+	mmLoad(mape->song);
     while(1){
         switch(objbuf->type){
             case 0:

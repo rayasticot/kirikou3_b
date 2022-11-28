@@ -17,16 +17,16 @@ void updateobj(){
   while(1){
     if(objbuf->type != 0){
         if(objbuf->x > cam_x-16 && objbuf->x - cam_x < 256){
-        objbuf->sprx = objbuf->x - cam_x;
+            objbuf->sprx = objbuf->x - cam_x;
         }
         else{
-        objbuf->sprx = 256;
+            objbuf->sprx = 256;
         }
         if(objbuf->y > cam_y-32 && objbuf->y - cam_y < 192){
-        objbuf->spry = objbuf->y - cam_y;
+            objbuf->spry = objbuf->y - cam_y;
         }
         else{
-        objbuf->spry = 192;
+            objbuf->spry = 192;
         }
         NF_MoveSprite(1, objbuf->id, objbuf->sprx, objbuf->spry);
     }

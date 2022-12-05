@@ -67,9 +67,12 @@ int main(int argc, char **argv){
 
 		scanKeys();
         updateobj();
-		/*scol = scol-1;
-		if(scol == -256) scol = 0;
-		NF_ScrollBg(1, 1, 0, scol);*/
+
+		if(curmap->song == 3){
+			scol = scol+4;
+			if(scol == 256) scol = 0;
+			NF_ScrollBg(1, 3, scol, scol);
+		}
 		if(timer != 0) timer--;
     }
 }

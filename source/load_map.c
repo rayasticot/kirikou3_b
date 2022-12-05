@@ -21,11 +21,14 @@ bool first = false;
 static void load_sprites(map* mape){
     int index = 0;
     sprite* spr = mape->firstspr;
+    for(int i = 0; i < spr_index; i++){
+        NF_UnloadSpriteGfx(i);
+        NF_FreeSpriteGfx(1, i);
+    }
+    for(int i = 0; i < pal_index; i++){
+        NF_UnloadSpritePal(i);
+    }
     while(1){
-        if(spr_index > index){
-            NF_UnloadSpriteGfx(index);
-            NF_FreeSpriteGfx(1, index);
-        }
         NF_LoadSpriteGfx(spr->name, index, spr->size_x, spr->size_y);
         NF_VramSpriteGfx(1, index, index, false);
         if(spr->next != NULL){
@@ -38,7 +41,6 @@ static void load_sprites(map* mape){
     str_link* pal = mape->pal_link;
     index = 0;
     while(1){
-        if(pal_index > index) NF_UnloadSpritePal(index);
         NF_LoadSpritePal(pal->str, index);
         NF_VramSpritePal(1, index, index);
         if(pal->next != NULL){
@@ -86,8 +88,8 @@ void load_map(map* mape){
                 case 4:
                     NF_CreateSprite(1, 2, 2, 1, objbuf->x, objbuf->y);
                     break;
-                */
-                /*case 5:
+                
+                case 5:
                     tper_end(objbuf);
                     break;
             }
@@ -136,7 +138,6 @@ void load_map(map* mape){
         if(objbuf->next == NULL) break;
         objbuf = objbuf->next;
     }
-    first = true;
     mmStart(mape->song, MM_PLAY_LOOP);
     NF_DeleteTiledBg(0, 3);
     /*setdark(3);

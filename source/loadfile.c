@@ -134,6 +134,7 @@ static void objload(){
 }
 
 static void mapload(){
+    num = 0;
     readnextline();
     charsetvalue(&m_map.bg_map);
     readnextline();

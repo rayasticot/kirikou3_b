@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <nds.h>
 #include <nf_lib.h>
 #include <maxmod9.h>
@@ -14,6 +15,10 @@
 void kirikou_start(obj* kirikou){
     NF_CreateSprite(1, kirikou->id, kirikou->sprid, kirikou->palid, kirikou->x, kirikou->y);
     player = kirikou;
+}
+
+void kirikou_end(obj* kirikou){
+    NF_DeleteSprite(1, kirikou->id);
 }
 
 void kirikou_update(obj* kirikou){

@@ -16,24 +16,25 @@
 #define RIGHT 3
 #define LEFT 4
 
+u16_f soundfile[20] = {SFX_BH00, SFX_BH01, SFX_BH02, SFX_BH03, SFX_BH04, SFX_BH10, SFX_BH11, SFX_BH12, SFX_BH13, SFX_BH14, SFX_BH20, SFX_BH21, SFX_BH22, SFX_BH23, SFX_BH24, SFX_BH30, SFX_BH31, SFX_BH32, SFX_BH33, SFX_BH34};
 
-static void dialog(obj* objbuf){
+void dialog(obj* objbuf){
     NF_LoadTiledBg(objbuf->valc1, objbuf->valc1, 256, 256);
     NF_CreateTiledBg(0, 2, objbuf->valc1);
     mmSetModuleVolume(128);
-    mmLoadEffect(objbuf->sound[objbuf->life]);
-    mm_sfxhand snd = mmEffect(objbuf->sound[objbuf->life]);
+    mmLoadEffect(soundfile[objbuf->sound[objbuf->life]]);
+    mm_sfxhand snd = mmEffect(soundfile[objbuf->sound[objbuf->life]]);
     mmEffectVolume(snd, 255);
     while(KEY_A ^ keysDown()){
         NF_SpriteOamSet(0);
-	    NF_SpriteOamSet(1);
+	      NF_SpriteOamSet(1);
 
-		swiWaitForVBlank();
+		    swiWaitForVBlank();
 
-		oamUpdate(&oamMain);
-		oamUpdate(&oamSub);
+		    oamUpdate(&oamMain);
+		    oamUpdate(&oamSub);
 
-		scanKeys();
+		    scanKeys();
     }
     mmEffectCancel(snd);
     mmUnloadEffect(objbuf->sound[objbuf->life]);
@@ -68,7 +69,11 @@ static void move_npc(obj* objbuf, int* check, int* def, bool aug){
 }
 
 void npc_start(obj* objbuf){
-  NF_CreateSprite(1, objbuf->id, objbuf->id, 1, objbuf->x, objbuf->y);
+  NF_CreateSprite(1, objbuf->id, objbuf->sprid, objbuf->palid, objbuf->x, objbuf->y);
+}
+
+void npc_end(obj* objbuf){
+  NF_DeleteSprite(1, objbuf->id);
 }
 
 void npc_update(obj* objbuf){

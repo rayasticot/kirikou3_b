@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <math.h>
 #include <nds.h>
 #include <nf_lib.h>
 #include <maxmod9.h>

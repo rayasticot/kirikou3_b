@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <nds.h>
 #include <nf_lib.h>
 #include <maxmod9.h>
@@ -16,6 +17,8 @@ map* curmap;
 obj* player;
 
 u16_f timer;
+
+int scol = 0;
 
 bool checkCollision(int x1, int y1, int sx1, int sy1, int x2, int y2, int sx2, int sy2){
 	if(x1+sx1 > x2 && x1 < x2+sx2){
@@ -45,7 +48,10 @@ int main(int argc, char **argv){
 	mmInitDefault("nitro:/soundbank.bin");
 	NF_InitCmapBuffers();
 
-	loadmapfile("bhcon/info.ddjim");
+	/*NF_LoadTiledBg("bg/pli", "plui", 256, 256);
+  	NF_CreateTiledBg(1, 1, "plui");*/
+
+	loadmapfile("k2bj1/info.ddjim");
 
     load_map(&m_map);
 
@@ -61,7 +67,9 @@ int main(int argc, char **argv){
 
 		scanKeys();
         updateobj();
-		
+		/*scol = scol-1;
+		if(scol == -256) scol = 0;
+		NF_ScrollBg(1, 1, 0, scol);*/
 		if(timer != 0) timer--;
     }
 }

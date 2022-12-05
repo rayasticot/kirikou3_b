@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <nds.h>
 #include <nf_lib.h>
 #include <maxmod9.h>
@@ -43,6 +44,9 @@ void updateobj(){
         case 4:
             EvilUpdate(objbuf);
             break;*/
+        case 5:
+            tper_update(objbuf);
+            break;
     }
     if(objbuf->next == NULL) break;
     objbuf = objbuf->next;

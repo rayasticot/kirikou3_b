@@ -55,11 +55,24 @@ with open("output.ddjim", "w") as final:
         if a == True:
             final.write(":NXT\n")
         final.write(nig["map"]["mlk"][i]["str"]+"\n")
+
+    final.write("_SCN\n")
+    a = False
+
+    for i in range(10): #a agrandir
+        try:
+            nig["map"]["scn"][i]["str"]
+        except IndexError:
+            final.write(":END\n")
+            break
+        if a == True:
+            final.write(":NXT\n")
+        final.write(nig["map"]["scn"][i]["str"]+"\n")
         
     final.write("_OBJ\n")
     a = False
     
-    for i in range(16): #a agrandir
+    for i in range(48): #a agrandir
         try:
             nig["map"]["obj"][i][obj_infor[0]]
         except IndexError:

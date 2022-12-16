@@ -10,6 +10,11 @@ typedef struct sprite{
 	int size_y;
 	struct sprite* next;
 } sprite;
+typedef struct scene{
+	char bg[24];
+	int sound;
+	struct scene* next;
+} scene;
 typedef struct obj{
 	int x;
 	int y;
@@ -40,6 +45,7 @@ typedef struct map{
 	int bgsize_y;
 	sprite* firstspr;
 	str_link* map_link;
+	str_link* cin_link;
     str_link* pal_link;
 	obj* firstobj;
 	//u8_f spritenum;

@@ -10,6 +10,9 @@
 #include "define.h"
 #include "structs.h"
 
+const u16_f SOUNDFILE[SOUNDFILESIZE] = {SFX_BH00, SFX_BH01, SFX_BH02, SFX_BH03, SFX_BH04, SFX_BH10, SFX_BH11, SFX_BH12, SFX_BH13, SFX_BH14, SFX_BH20, SFX_BH21, SFX_BH22, SFX_BH23, SFX_BH24, SFX_BH30, SFX_BH31, SFX_BH32, SFX_BH33, SFX_BH34};
+const u16_f MUSICFILE[MUSICFILESIZE] = {MOD_GANIOU, MOD_REIMP, MOD_BAISE, MOD_CAVE};
+
 int cam_x;
 int cam_y;
 
@@ -27,6 +30,24 @@ bool checkCollision(int x1, int y1, int sx1, int sy1, int x2, int y2, int sx2, i
 		}
 	}
 	return false;
+}
+
+void crashgame(char* msg){
+    mmStop();
+	mmLoad(MOD_CRASH);
+	mmStart(MOD_CRASH, MM_PLAY_ONCE);
+
+	NF_LoadTiledBg("bg/pirate", "pirate", 256, 256);
+    NF_CreateTiledBg(0, 2, "pirate");
+
+	consoleDemoInit();
+	consoleClear();
+	setBrightness(3, 0);
+	iprintf(msg);
+	
+	while(1){
+		swiWaitForVBlank();
+	}
 }
 
 //#include "teststruct.h"
@@ -66,9 +87,23 @@ int main(int argc, char **argv){
 		oamUpdate(&oamSub);
 
 		scanKeys();
-        updateobj();
+		u8_f point = updateobj();
+		
+        if(point != 0){
+			str_link* link_map = curmap->map_link;
+			str_link* link_cin = curmap->cin_link;
+			for(int i = 2; i < point; i++){
+				link_map = link_map->next;
+				link_cin = link_cin->next;
+			}
+			if(strcmp(link_cin->str, "") != 0){
+				start_cinematic(link_cin->str);
+			}
+			loadmapfile(link_map->str);
+			load_map(&m_map);
+		}
 
-		if(curmap->song == 3){
+		if(curmap->song == 1){
 			scol = scol+4;
 			if(scol == 256) scol = 0;
 			NF_ScrollBg(1, 3, scol, scol);

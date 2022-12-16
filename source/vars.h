@@ -9,5 +9,10 @@ extern u16_f timer;
 extern sprite m_spr[16];
 extern str_link m_pal[16];
 extern str_link m_mlk[10];
-extern obj m_obj[16];
+extern str_link m_scn[10];
+extern obj m_obj[48];
+extern scene m_cin[16];
+
+extern const u16_f SOUNDFILE[SOUNDFILESIZE];
+extern const u16_f MUSICFILE[MUSICFILESIZE];
 #endif

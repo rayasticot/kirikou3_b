@@ -2,12 +2,16 @@ _MAP
 bhcon/bg/map
 bhcon/bg/obj
 bhcon/bg/col
-1
+2
 768
 768
 _SPR
 spr/kirikou
 16
+32
+:NXT
+spr/couto
+32
 32
 :NXT
 bhcon/spr/0
@@ -34,6 +38,9 @@ bhcon/pal/npc
 _MLK
 parkou.ddjim
 :END
+_SCN
+.NOA
+:END
 _OBJ
 384
 478
@@ -56,7 +63,7 @@ _OBJ
 632
 558
 3
-3
+4
 1
 1
 bhcon/bg/kisse
@@ -74,7 +81,7 @@ bhcon/bg/kisse
 614
 162
 2
-2
+3
 1
 1
 bhcon/bg/wade
@@ -92,7 +99,7 @@ bhcon/bg/wade
 224
 156
 1
-1
+2
 1
 1
 bhcon/bg/avoca
@@ -110,7 +117,7 @@ bhcon/bg/avoca
 140
 666
 4
-4
+5
 1
 1
 bhcon/bg/akpa

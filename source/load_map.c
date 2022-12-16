@@ -15,6 +15,8 @@
 int spr_index = 0;
 int pal_index = 0;
 
+int oldsong;
+
 bool first = false;
 
 
@@ -74,6 +76,11 @@ void load_map(map* mape){
   	NF_CreateTiledBg(0, 3, "load");
     obj* objbuf;
 
+    if(first == true){
+        mmStop();
+        mmUnload(MUSICFILE[oldsong]);
+    }
+
     /*if(first == true){
         while(1){
             objbuf = curmap->firstobj;
@@ -89,9 +96,6 @@ void load_map(map* mape){
                     NF_CreateSprite(1, 2, 2, 1, objbuf->x, objbuf->y);
                     break;
                 
-                case 5:
-                    tper_end(objbuf);
-                    break;
             }
             if(objbuf->next == NULL) break;
             objbuf = objbuf->next;
@@ -118,7 +122,8 @@ void load_map(map* mape){
     load_sprites(mape);
 
     objbuf = mape->firstobj;
-	mmLoad(mape->song);
+	mmLoad(MUSICFILE[mape->song]);
+    oldsong = mape->song;
     while(1){
         switch(objbuf->type){
             case 0:
@@ -131,14 +136,11 @@ void load_map(map* mape){
             case 4:
                 NF_CreateSprite(1, 2, 2, 1, objbuf->x, objbuf->y);
                 break;
-            case 5:
-                tper_start(objbuf);
-                break;
         }
         if(objbuf->next == NULL) break;
         objbuf = objbuf->next;
     }
-    mmStart(mape->song, MM_PLAY_LOOP);
+    mmStart(MUSICFILE[mape->song], MM_PLAY_LOOP);
     NF_DeleteTiledBg(0, 3);
     /*setdark(3);
     setdark(2);*/

@@ -16,16 +16,14 @@
 #define RIGHT 3
 #define LEFT 4
 
-u16_f soundfile[20] = {SFX_BH00, SFX_BH01, SFX_BH02, SFX_BH03, SFX_BH04, SFX_BH10, SFX_BH11, SFX_BH12, SFX_BH13, SFX_BH14, SFX_BH20, SFX_BH21, SFX_BH22, SFX_BH23, SFX_BH24, SFX_BH30, SFX_BH31, SFX_BH32, SFX_BH33, SFX_BH34};
-
 void dialog(obj* objbuf){
     NF_LoadTiledBg(objbuf->valc1, objbuf->valc1, 256, 256);
     NF_CreateTiledBg(0, 2, objbuf->valc1);
     mmSetModuleVolume(128);
-    mmLoadEffect(soundfile[objbuf->sound[objbuf->life]]);
-    mm_sfxhand snd = mmEffect(soundfile[objbuf->sound[objbuf->life]]);
+    mmLoadEffect(SOUNDFILE[objbuf->sound[objbuf->life]]);
+    mm_sfxhand snd = mmEffect(SOUNDFILE[objbuf->sound[objbuf->life]]);
     mmEffectVolume(snd, 255);
-    while(KEY_A ^ keysDown()){
+    while(!(KEY_A & keysDown())){
         NF_SpriteOamSet(0);
 	      NF_SpriteOamSet(1);
 
@@ -37,7 +35,7 @@ void dialog(obj* objbuf){
 		    scanKeys();
     }
     mmEffectCancel(snd);
-    mmUnloadEffect(objbuf->sound[objbuf->life]);
+    mmUnloadEffect(SOUNDFILE[objbuf->sound[objbuf->life]]);
     NF_DeleteTiledBg(0, 2);
     NF_UnloadTiledBg(objbuf->valc1);
     mmSetModuleVolume(1024);
@@ -77,6 +75,7 @@ void npc_end(obj* objbuf){
 }
 
 void npc_update(obj* objbuf){
+  if(objbuf->radius != 0){
     int randnum;
     switch(objbuf->state){
       case 0:
@@ -98,6 +97,7 @@ void npc_update(obj* objbuf){
         move_npc(objbuf, &objbuf->x, &objbuf->defx, false);
         break;
     }
+  }
   if(checkCollision(objbuf->x, objbuf->y, 16, 32, player->x, player->y, 16, 32) == true && timer == 0){
     dialog(objbuf);
     timer = 180;

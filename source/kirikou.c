@@ -12,8 +12,16 @@
 #include "vars.h"
 #include "functions.h"
 
+int swordtimer = 0;
+u8_f sdir = 0;
+u16_f angle[4] = {0, 256, 128, 384};
+int swbuf = 0;
+
 void kirikou_start(obj* kirikou){
     NF_CreateSprite(1, kirikou->id, kirikou->sprid, kirikou->palid, kirikou->x, kirikou->y);
+    NF_CreateSprite(1, 50, kirikou->sprid+1, kirikou->palid, kirikou->x, kirikou->y);
+    NF_EnableSpriteRotScale(1, 50, 0, false);
+    NF_ShowSprite(1, 50, false);
     player = kirikou;
 }
 
@@ -21,29 +29,43 @@ void kirikou_end(obj* kirikou){
     NF_DeleteSprite(1, kirikou->id);
 }
 
-void kirikou_update(obj* kirikou){
+static int get_both_side(int x, int y){
+    u8_f point_a = NF_GetTile(0, x, y);
+    u8_f point_b = NF_GetTile(0, x+16, y+32);
+    if(point_a > 1 || point_b > 1){
+        if(point_a > point_b) return point_a;
+        else return point_b;
+    }
+    else return 0;
+}
+
+u8_f kirikou_update(obj* kirikou){
     bool x_flag = false;
     bool y_flag = false;
 
     if(KEY_RIGHT & keysHeld()){
+        sdir = 0;
         NF_HflipSprite(1, kirikou->id, false);
-        if(NF_GetTile(0, kirikou->x+17, kirikou->y) == 0 && NF_GetTile(0, kirikou->x+17, kirikou->y+30) == 0){
+        if(NF_GetTile(0, kirikou->x+17, kirikou->y) != 1 && NF_GetTile(0, kirikou->x+17, kirikou->y+30) != 1){
             kirikou->x += 1;
         }
     }
     if(KEY_LEFT & keysHeld()){
+        sdir = 1;
         NF_HflipSprite(1, kirikou->id, true);
-        if(NF_GetTile(0, kirikou->x-1, kirikou->y) == 0 && NF_GetTile(0, kirikou->x-1, kirikou->y+30) == 0){
+        if(NF_GetTile(0, kirikou->x-1, kirikou->y) != 1 && NF_GetTile(0, kirikou->x-1, kirikou->y+30) != 1){
             kirikou->x -= 1;
         }
     }
     if(KEY_DOWN & keysHeld()){
-        if(NF_GetTile(0, kirikou->x, kirikou->y+31) == 0 && NF_GetTile(0, kirikou->x+14, kirikou->y+31) == 0){
+        sdir = 2;
+        if(NF_GetTile(0, kirikou->x, kirikou->y+31) != 1 && NF_GetTile(0, kirikou->x+14, kirikou->y+31) != 1){
             kirikou->y += 1;
         }
     }
     if(KEY_UP & keysHeld()){
-        if(NF_GetTile(0, kirikou->x, kirikou->y-1) == 0 && NF_GetTile(0, kirikou->x+14, kirikou->y-1) == 0){
+        sdir = 3;
+        if(NF_GetTile(0, kirikou->x, kirikou->y-1) != 1 && NF_GetTile(0, kirikou->x+14, kirikou->y-1) != 1){
             kirikou->y -= 1;
         }
     }
@@ -103,8 +125,55 @@ void kirikou_update(obj* kirikou){
         }
     }
 
+    if(swordtimer == -1){
+        if(KEY_Y & keysDown()){
+            swordtimer = 90;
+            NF_ShowSprite(1, 50, true);
+            NF_SpriteRotScale(1, 0, angle[sdir], 256, 256);
+        }
+    }
+
+    if(swordtimer == -1){
+        switch(sdir){
+            case 0:
+            case 1:
+                swbuf = 0;
+                break;
+            case 2:
+                swbuf = 16;
+                break;
+            case 3:
+                swbuf = -16;
+                break;
+        }
+    }
+
+    if(swordtimer == 0){
+        NF_ShowSprite(1, 50, false);
+        swordtimer = -1;
+    }
+
+	if(swordtimer > 0) swordtimer--;
+
     NF_MoveSprite(1, kirikou->id, kirikou->sprx, kirikou->spry);
+    NF_MoveSprite(1, 50, kirikou->sprx-8, kirikou->spry+swbuf);
 
     NF_ScrollBg(1, 3, cam_x, cam_y);
     NF_ScrollBg(1, 2, cam_x, cam_y);
+
+    u8_f point = get_both_side(kirikou->x, kirikou->y);
+    return point;
+    /*if(point != 0){
+        str_link* link_map = curmap->map_link;
+        str_link* link_cin = curmap->cin_link;
+        for(int i = 2; i < point; i++){
+            link_map = link_map->next;
+            link_cin = link_cin->next;
+        }
+        if(strcmp(link_cin->str, "") != 0){
+            start_cinematic(link_cin->str);
+        }
+        loadmapfile(link_map->str);
+        load_map(&m_map);
+    }*/
 }

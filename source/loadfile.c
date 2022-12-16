@@ -23,7 +23,9 @@ map m_map;
 sprite m_spr[16];
 str_link m_pal[16];
 str_link m_mlk[10];
-obj m_obj[16];
+str_link m_scn[10];
+obj m_obj[48];
+scene m_cin[16];
 
 static void readnextline(){
     fgets(buf, 24, mpfile);
@@ -83,6 +85,17 @@ static void mlkload(){
         m_mlk[num].next = &m_mlk[num+1];
         num++;
         mlkload();
+    }
+}
+
+static void scnload(){
+    readnextline();
+    charsetvalue(&m_scn[num].str);
+    readnextline();
+    if(strcmp(buf, ":END") != 0){
+        m_scn[num].next = &m_scn[num+1];
+        num++;
+        scnload();
     }
 }
 
@@ -150,22 +163,27 @@ static void mapload(){
 
     readnextline();
     m_map.firstspr = &m_spr[0];
-    if(strcmp(buf, "_SPR") != 0) NF_Error(229, "caca", 2);
+    if(strcmp(buf, "_SPR") != 0) crashgame("ERREUR 229");
     else sprload();
     num = 0;
     readnextline();
     m_map.pal_link = &m_pal[0];
-    if(strcmp(buf, "_PAL") != 0) NF_Error(230, "caca", 2);
+    if(strcmp(buf, "_PAL") != 0) crashgame("ERREUR 230");
     else palload();
     num = 0;
     readnextline();
     m_map.map_link = &m_mlk[0];
-    if(strcmp(buf, "_MLK") != 0) NF_Error(231, "caca", 2);
+    if(strcmp(buf, "_MLK") != 0) crashgame("ERREUR 231");
     else mlkload();
     num = 0;
     readnextline();
+    m_map.cin_link = &m_scn[0];
+    if(strcmp(buf, "_SCN") != 0) crashgame("ERREUR 232");
+    else scnload();
+    num = 0;
+    readnextline();
     m_map.firstobj = &m_obj[0];
-    if(strcmp(buf, "_OBJ") != 0) NF_Error(232, "caca", 2);
+    if(strcmp(buf, "_OBJ") != 0) crashgame("ERREUR 233");
     else objload();
 }
 
@@ -176,7 +194,32 @@ void loadmapfile(char* filename){
     fgets(buf, 24, mpfile);
 
     if(strcmp(buf, "_MAP\n") == 0) mapload();
-    else NF_Error(228, "caca", 2);
+    else crashgame("ERREUR 228");
+
+    fclose(mpfile);
+}
+
+static void cinload(){
+    readnextline();
+    charsetvalue(&m_cin[num].bg);
+    readnextline();
+    intsetvalue(&m_cin[num].sound);
+    if(strcmp(buf, ":END") != 0){
+        m_cin[num].next = &m_cin[num+1];
+        num++;
+        cinload();
+    }
+}
+
+void loadcinfile(char* filename){
+
+    mpfile = fopen(filename, "r");
+
+    fgets(buf, 24, mpfile);
+
+    num = 0;
+    if(strcmp(buf, "_CIN\n") == 0) cinload();
+    else crashgame("ERREUR 922");
 
     fclose(mpfile);
 }

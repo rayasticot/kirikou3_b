@@ -16,6 +16,13 @@ typedef struct scene{
 	struct scene* next;
 } scene;
 typedef struct obj{
+	float acc_x;
+	float acc_y;
+	float spe_x;
+	float spe_y;
+	float tru_x;
+	float tru_y;
+	
 	int x;
 	int y;
 	int sprx;

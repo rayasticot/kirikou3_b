@@ -88,7 +88,7 @@ int main(int argc, char **argv){
 
 		scanKeys();
 		u8_f point = updateobj();
-		
+
         if(point != 0){
 			str_link* link_map = curmap->map_link;
 			str_link* link_cin = curmap->cin_link;

@@ -23,6 +23,13 @@ void kirikou_start(obj* kirikou){
     NF_EnableSpriteRotScale(1, 50, 0, false);
     NF_ShowSprite(1, 50, false);
     player = kirikou;
+
+    kirikou->acc_x = 0;
+    kirikou->acc_y = 0;
+    kirikou->spe_x = 0;
+    kirikou->spe_y = 0;
+    kirikou->tru_x = kirikou->x;
+    kirikou->tru_y = kirikou->y;
 }
 
 void kirikou_end(obj* kirikou){
@@ -43,32 +50,57 @@ u8_f kirikou_update(obj* kirikou){
     bool x_flag = false;
     bool y_flag = false;
 
+    if(kirikou->spe_x < 0) kirikou->spe_x += 0.1;
+    if(kirikou->spe_x > 0) kirikou->spe_x -= 0.1;
+    if(kirikou->spe_y < 0) kirikou->spe_y += 0.1;
+    if(kirikou->spe_y > 0) kirikou->spe_y -= 0.1;
+
+    if(kirikou->spe_x <= 0.1 && kirikou->spe_x >= -0.1) kirikou->spe_x = 0;
+    if(kirikou->spe_y <= 0.1 && kirikou->spe_y >= -0.1) kirikou->spe_y = 0;
+
+    kirikou->acc_x = 0;
+    kirikou->acc_y = 0;
+
     if(KEY_RIGHT & keysHeld()){
         sdir = 0;
         NF_HflipSprite(1, kirikou->id, false);
         if(NF_GetTile(0, kirikou->x+17, kirikou->y) != 1 && NF_GetTile(0, kirikou->x+17, kirikou->y+30) != 1){
-            kirikou->x += 1;
+            kirikou->acc_x = 0.2;
         }
     }
     if(KEY_LEFT & keysHeld()){
         sdir = 1;
         NF_HflipSprite(1, kirikou->id, true);
         if(NF_GetTile(0, kirikou->x-1, kirikou->y) != 1 && NF_GetTile(0, kirikou->x-1, kirikou->y+30) != 1){
-            kirikou->x -= 1;
+            kirikou->acc_x = -0.2;
         }
     }
     if(KEY_DOWN & keysHeld()){
         sdir = 2;
         if(NF_GetTile(0, kirikou->x, kirikou->y+31) != 1 && NF_GetTile(0, kirikou->x+14, kirikou->y+31) != 1){
-            kirikou->y += 1;
+            kirikou->acc_y = +0.2;
         }
     }
     if(KEY_UP & keysHeld()){
         sdir = 3;
         if(NF_GetTile(0, kirikou->x, kirikou->y-1) != 1 && NF_GetTile(0, kirikou->x+14, kirikou->y-1) != 1){
-            kirikou->y -= 1;
+            kirikou->acc_y = -0.2;
         }
     }
+
+    kirikou->spe_x += kirikou->acc_x;
+    kirikou->spe_y += kirikou->acc_y;
+
+    if(kirikou->spe_x > 1) kirikou->spe_x = 1;
+    if(kirikou->spe_x < -1) kirikou->spe_x = -1;
+    if(kirikou->spe_y > 1) kirikou->spe_y = 1;
+    if(kirikou->spe_y < -1) kirikou->spe_y = -1;
+
+    kirikou->tru_x += kirikou->spe_x;
+    kirikou->tru_y += kirikou->spe_y;
+
+    kirikou->x = kirikou->tru_x;
+    kirikou->y = kirikou->tru_y;
 
     if(kirikou->x < 0){
         kirikou->x = 0;

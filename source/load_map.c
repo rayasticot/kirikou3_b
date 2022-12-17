@@ -132,10 +132,13 @@ void load_map(map* mape){
             case 1:
                 npc_start(objbuf);
                 break;
-            case 3:
+            case 2:
+                ennemy_start(objbuf);
+                break;
+            /*case 3:
             case 4:
                 NF_CreateSprite(1, 2, 2, 1, objbuf->x, objbuf->y);
-                break;
+                break;*/
         }
         if(objbuf->next == NULL) break;
         objbuf = objbuf->next;

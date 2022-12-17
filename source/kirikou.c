@@ -12,6 +12,7 @@
 #include "vars.h"
 #include "functions.h"
 
+bool attacking = false;
 int swordtimer = 0;
 u8_f sdir = 0;
 u16_f angle[4] = {0, 256, 128, 384};
@@ -61,30 +62,36 @@ u8_f kirikou_update(obj* kirikou){
     kirikou->acc_x = 0;
     kirikou->acc_y = 0;
 
-    if(KEY_RIGHT & keysHeld()){
-        sdir = 0;
-        NF_HflipSprite(1, kirikou->id, false);
-        if(NF_GetTile(0, kirikou->x+17, kirikou->y) != 1 && NF_GetTile(0, kirikou->x+17, kirikou->y+30) != 1){
-            kirikou->acc_x = 0.2;
+    if(swordtimer == -1){
+        if(KEY_RIGHT & keysHeld()){
+            //sdir = 0;
+            NF_HflipSprite(1, kirikou->id, false);
+            if(NF_GetTile(0, kirikou->x+17, kirikou->y) != 1 && NF_GetTile(0, kirikou->x+17, kirikou->y+30) != 1){
+                kirikou->acc_x = 0.2;
+            }
+            else kirikou->spe_x = -kirikou->spe_x;
         }
-    }
-    if(KEY_LEFT & keysHeld()){
-        sdir = 1;
-        NF_HflipSprite(1, kirikou->id, true);
-        if(NF_GetTile(0, kirikou->x-1, kirikou->y) != 1 && NF_GetTile(0, kirikou->x-1, kirikou->y+30) != 1){
-            kirikou->acc_x = -0.2;
+        if(KEY_LEFT & keysHeld()){
+            //sdir = 1;
+            NF_HflipSprite(1, kirikou->id, true);
+            if(NF_GetTile(0, kirikou->x-1, kirikou->y) != 1 && NF_GetTile(0, kirikou->x-1, kirikou->y+30) != 1){
+                kirikou->acc_x = -0.2;
+            }
+            else kirikou->spe_x = -kirikou->spe_x;
         }
-    }
-    if(KEY_DOWN & keysHeld()){
-        sdir = 2;
-        if(NF_GetTile(0, kirikou->x, kirikou->y+31) != 1 && NF_GetTile(0, kirikou->x+14, kirikou->y+31) != 1){
-            kirikou->acc_y = +0.2;
+        if(KEY_DOWN & keysHeld()){
+            //sdir = 2;
+            if(NF_GetTile(0, kirikou->x, kirikou->y+31) != 1 && NF_GetTile(0, kirikou->x+14, kirikou->y+31) != 1){
+                kirikou->acc_y = 0.2;
+            }
+            else kirikou->spe_y = -kirikou->spe_y;
         }
-    }
-    if(KEY_UP & keysHeld()){
-        sdir = 3;
-        if(NF_GetTile(0, kirikou->x, kirikou->y-1) != 1 && NF_GetTile(0, kirikou->x+14, kirikou->y-1) != 1){
-            kirikou->acc_y = -0.2;
+        if(KEY_UP & keysHeld()){
+            //sdir = 3;
+            if(NF_GetTile(0, kirikou->x, kirikou->y-1) != 1 && NF_GetTile(0, kirikou->x+14, kirikou->y-1) != 1){
+                kirikou->acc_y = -0.2;
+            }
+            else kirikou->spe_y = -kirikou->spe_y;
         }
     }
 
@@ -157,27 +164,43 @@ u8_f kirikou_update(obj* kirikou){
         }
     }
 
+    attacking = false;
+
     if(swordtimer == -1){
+        if(KEY_A & keysDown()){
+            sdir = 0;
+            attacking = true;
+        }
         if(KEY_Y & keysDown()){
-            swordtimer = 90;
+            sdir = 1;
+            attacking = true;
+        }
+        if(KEY_B & keysDown()){
+            sdir = 2;
+            attacking = true;
+        }
+        if(KEY_X & keysDown()){
+            sdir = 3;
+            attacking = true;
+        }
+        if(attacking == true){
+            swordtimer = 30;
             NF_ShowSprite(1, 50, true);
             NF_SpriteRotScale(1, 0, angle[sdir], 256, 256);
         }
     }
 
-    if(swordtimer == -1){
-        switch(sdir){
-            case 0:
-            case 1:
-                swbuf = 0;
-                break;
-            case 2:
-                swbuf = 16;
-                break;
-            case 3:
-                swbuf = -16;
-                break;
-        }
+    switch(sdir){
+        case 0:
+        case 1:
+            swbuf = 0;
+            break;
+        case 2:
+            swbuf = 16;
+            break;
+        case 3:
+            swbuf = -16;
+            break;
     }
 
     if(swordtimer == 0){

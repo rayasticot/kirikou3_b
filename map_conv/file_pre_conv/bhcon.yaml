@@ -29,7 +29,7 @@ map:
     - str: "spr/kirikou"
     - str: "bhcon/pal/npc"
   mlk:
-    - str: "parkou.ddjim"
+    - str: "bjca1/info.ddjim"
   scn:
     - str: ".NOA"
   obj:

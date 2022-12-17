@@ -14,4 +14,6 @@ void npc_end(obj* objbuf);
 bool checkCollision(int x1, int y1, int sx1, int sy1, int x2, int y2, int sx2, int sy2);
 void crashgame(char* msg);
 void start_cinematic(char* name);
+void ennemy_start(obj* objbuf);
+void enemy_update(obj* objbuf);
 #endif

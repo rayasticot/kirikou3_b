@@ -13,6 +13,9 @@ extern str_link m_scn[10];
 extern obj m_obj[48];
 extern scene m_cin[16];
 
+extern u8_f sdir;
+extern int swordtimer;
+
 extern const u16_f SOUNDFILE[SOUNDFILESIZE];
 extern const u16_f MUSICFILE[MUSICFILESIZE];
 #endif

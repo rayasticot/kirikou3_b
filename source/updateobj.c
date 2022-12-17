@@ -39,6 +39,9 @@ u8_f updateobj(){
             case 1:
                 npc_update(objbuf);
                 break;
+            case 2:
+                enemy_update(objbuf);
+                break;
             /*case 3:
                 EvilUpdate(objbuf);
                 break;

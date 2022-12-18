@@ -148,3 +148,9 @@ void load_map(map* mape){
     /*setdark(3);
     setdark(2);*/
 }
+
+void full_load_map(char* link){
+    loadmapfile(link);
+    strcpy(m_map.name, link);
+    load_map(&m_map);
+}

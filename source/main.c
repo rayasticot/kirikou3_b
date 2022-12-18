@@ -72,9 +72,7 @@ int main(int argc, char **argv){
 	/*NF_LoadTiledBg("bg/pli", "plui", 256, 256);
   	NF_CreateTiledBg(1, 1, "plui");*/
 
-	loadmapfile("k2bj1/info.ddjim");
-
-    load_map(&m_map);
+	full_load_map("bjca1/info.ddjim");
 
     while(1){
 
@@ -99,8 +97,7 @@ int main(int argc, char **argv){
 			if(strcmp(link_cin->str, "") != 0){
 				start_cinematic(link_cin->str);
 			}
-			loadmapfile(link_map->str);
-			load_map(&m_map);
+			full_load_map(link_map->str);
 		}
 
 		if(curmap->song == 1){

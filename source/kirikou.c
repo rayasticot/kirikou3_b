@@ -47,6 +47,26 @@ static int get_both_side(int x, int y){
     else return 0;
 }
 
+void gameover(){
+    mmStop();
+    NF_LoadTiledBg("bg/gameover", "gameover", 256, 256);
+    NF_CreateTiledBg(0, 2, "gameover");
+    while(!(KEY_A & keysDown())){
+        NF_SpriteOamSet(0);
+		NF_SpriteOamSet(1);
+
+		swiWaitForVBlank();
+
+		oamUpdate(&oamMain);
+		oamUpdate(&oamSub);
+
+		scanKeys();
+    }
+    NF_DeleteTiledBg(0, 2);
+    NF_UnloadTiledBg("gameover");
+    full_load_map(curmap->name);
+}
+
 u8_f kirikou_update(obj* kirikou){
     bool x_flag = false;
     bool y_flag = false;

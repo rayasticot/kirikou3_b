@@ -28,7 +28,7 @@ void ennemy_start(obj* objbuf){
 
 static bool swordcollision(obj* objbuf){
     if(sdir <= 1){
-        if(checkCollision(objbuf->x, objbuf->y, 16, 8, player->x+sw_x, player->y+sw_y, 16, 2) == true){
+        if(checkCollision(objbuf->x, objbuf->y, 16, 8, player->x+sw_x, player->y+sw_y, 16, 4) == true){
             if(sdir == 0) objbuf->spe_x = 6;
             else objbuf->spe_x = -6;
             objbuf->life--;
@@ -36,7 +36,7 @@ static bool swordcollision(obj* objbuf){
         }
     }
     else{
-        if(checkCollision(objbuf->x, objbuf->y, 16, 8, player->x+sw_x, player->y+sw_y, 2, 16) == true){
+        if(checkCollision(objbuf->x, objbuf->y, 16, 8, player->x+sw_x, player->y+sw_y, 4, 16) == true){
             if(sdir == 2) objbuf->spe_y = 6;
             else objbuf->spe_y = -6;
             objbuf->life--;
@@ -59,7 +59,7 @@ static void enemy_update_action(obj* objbuf){
     objbuf->acc_y = 0;
     
     if(checkCollision(objbuf->x, objbuf->y, 16, 8, player->x, player->y, 16, 32) == true){
-        crashgame("Dieu est.");
+        gameover();
     }
 
     sw_x = 0;
@@ -67,18 +67,18 @@ static void enemy_update_action(obj* objbuf){
     switch(sdir){
         case 0:
             sw_x = 8;
-            sw_y = 16;
+            sw_y = 14;
             break;
         case 1:
             sw_x = -8;
-            sw_y = 16;
+            sw_y = 14;
             break;
         case 2:
-            sw_x = 8;
+            sw_x = 6;
             sw_y = 32;
             break;
         case 3:
-            sw_x = 8;
+            sw_x = 6;
             sw_y = -16;
             break;
     }

@@ -43,6 +43,7 @@ typedef struct obj{
 	struct obj* next;
 } obj;
 typedef struct map{
+	char name[24];
 	char bg_map[24];
 	char bg_obj[24];
 	//char* bg_mini;

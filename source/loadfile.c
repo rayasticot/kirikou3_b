@@ -64,6 +64,7 @@ static void sprload(){
         num++;
         sprload();
     }
+    m_spr[num].next = NULL;
 }
 
 static void palload(){
@@ -75,6 +76,7 @@ static void palload(){
         num++;
         palload();
     }
+    m_pal[num].next = NULL;
 }
 
 static void mlkload(){
@@ -86,6 +88,7 @@ static void mlkload(){
         num++;
         mlkload();
     }
+    m_mlk[num].next = NULL;
 }
 
 static void scnload(){
@@ -97,6 +100,7 @@ static void scnload(){
         num++;
         scnload();
     }
+    m_scn[num].next = NULL;
 }
 
 static void objload(){
@@ -144,6 +148,7 @@ static void objload(){
         num++;
         objload();
     }
+    m_obj[num].next = NULL;
 }
 
 static void mapload(){

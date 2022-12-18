@@ -16,4 +16,6 @@ void crashgame(char* msg);
 void start_cinematic(char* name);
 void ennemy_start(obj* objbuf);
 void enemy_update(obj* objbuf);
+void gameover();
+void full_load_map(char* link);
 #endif

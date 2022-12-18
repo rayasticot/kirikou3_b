@@ -45,14 +45,17 @@ void crashgame(char* msg){
 	setBrightness(3, 0);
 	iprintf(msg);
 	
-	while(1){
+	while((!(KEY_SELECT & keysDown()))){
 		swiWaitForVBlank();
+		scanKeys();
 	}
 }
 
 //#include "teststruct.h"
 #include "vars.h"
 #include "functions.h"
+
+bool nig = false;
 
 
 int main(int argc, char **argv){
@@ -72,7 +75,7 @@ int main(int argc, char **argv){
 	/*NF_LoadTiledBg("bg/pli", "plui", 256, 256);
   	NF_CreateTiledBg(1, 1, "plui");*/
 
-	full_load_map("bjca1/info.ddjim");
+	full_load_map("k2bj1/info.ddjim");
 
     while(1){
 
@@ -94,8 +97,9 @@ int main(int argc, char **argv){
 				link_map = link_map->next;
 				link_cin = link_cin->next;
 			}
-			if(strcmp(link_cin->str, "") != 0){
+			if(strcmp(link_cin->str, ".NOA") != 0){
 				start_cinematic(link_cin->str);
+				nig = true;
 			}
 			full_load_map(link_map->str);
 		}

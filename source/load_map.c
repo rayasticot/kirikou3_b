@@ -151,6 +151,5 @@ void load_map(map* mape){
 
 void full_load_map(char* link){
     loadmapfile(link);
-    strcpy(m_map.name, link);
     load_map(&m_map);
 }

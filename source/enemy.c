@@ -17,6 +17,8 @@ bool sw_touch = false;
 
 void ennemy_start(obj* objbuf){
     NF_CreateSprite(1, objbuf->id, objbuf->sprid, objbuf->palid, objbuf->x, objbuf->y);
+    NF_ShowSprite(1, objbuf->id, true);
+    NF_HflipSprite(1, objbuf->id, false);
 
     objbuf->acc_x = 0;
     objbuf->acc_y = 0;

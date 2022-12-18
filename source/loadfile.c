@@ -33,10 +33,10 @@ static void readnextline(){
 }
 
 static void charsetvalue(char (*dest)[24]){
-    if(strcmp(buf, ".NOA") != 0){
+    //if(strcmp(buf, ".NOA") != 0){
         //*dest = buf;
         strcpy(*dest, buf);
-    }
+    //}
 }
 
 static void intsetvalue(int* dest){
@@ -197,6 +197,8 @@ void loadmapfile(char* filename){
     mpfile = fopen(filename, "r");
 
     fgets(buf, 24, mpfile);
+    
+    strcpy(m_map.name, filename);
 
     if(strcmp(buf, "_MAP\n") == 0) mapload();
     else crashgame("ERREUR 228");
@@ -214,6 +216,7 @@ static void cinload(){
         num++;
         cinload();
     }
+    m_cin[num].next = NULL;
 }
 
 void loadcinfile(char* filename){

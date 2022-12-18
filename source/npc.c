@@ -68,6 +68,8 @@ static void move_npc(obj* objbuf, int* check, int* def, bool aug){
 
 void npc_start(obj* objbuf){
   NF_CreateSprite(1, objbuf->id, objbuf->sprid, objbuf->palid, objbuf->x, objbuf->y);
+  NF_ShowSprite(1, objbuf->id, true);
+  NF_HflipSprite(1, objbuf->id, false);
 }
 
 void npc_end(obj* objbuf){

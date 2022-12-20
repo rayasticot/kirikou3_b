@@ -3,6 +3,7 @@ map:
   bg_map: "k2bj2/bg/weird"
   bg_obj: "k2bj2/bg/obj"
   cmap: "k2bj2/bg/col"
+  id: "1"
   song: "1"
   bgsize_x: "768"
   bgsize_y: "768"
@@ -21,8 +22,9 @@ map:
     - str: "k2bj2/pal/leadi"
   mlk:
     - str: "bhcon/info.ddjim"
-  scn:
-    - str: "cine/ganiou.ddjim"
+      cin: "cine/ganiou.ddjim"
+      pl_x: "0"
+      pl_y: "0"
   obj:
     - x: "104"
       y: "720"

@@ -1,7 +1,8 @@
 import yaml
 
-map_infor = ("bg_map", "bg_obj", "cmap", "song", "bgsize_x", "bgsize_y")
+map_infor = ("bg_map", "bg_obj", "cmap", "id", "song", "bgsize_x", "bgsize_y")
 spr_infor = ("name", "size_x", "size_y")
+mlk_infor = ("str", "cin", "pl_x", "pl_y")
 obj_infor = ("x", "y", "id", "sprid", "palid", "type", "valc1", "defx", "defy", "radius", "sound0", "sound1", "sound2", "sound3", "sound4", "state", "life")
 
 with open("info.yaml", "r") as info:
@@ -10,7 +11,7 @@ with open("info.yaml", "r") as info:
 with open("output.ddjim", "w") as final:
     final.write("_MAP\n")
     
-    for i in range(6):
+    for i in range(7):
         final.write(nig["map"][map_infor[i]]+"\n")
     
     final.write("_SPR\n")
@@ -48,26 +49,15 @@ with open("output.ddjim", "w") as final:
         
     for i in range(10): #a agrandir
         try:
-            nig["map"]["mlk"][i]["str"]
+            nig["map"]["mlk"][i][mlk_infor[0]]
         except IndexError:
             final.write(":END\n")
             break
         if a == True:
             final.write(":NXT\n")
-        final.write(nig["map"]["mlk"][i]["str"]+"\n")
-
-    final.write("_SCN\n")
-    a = False
-
-    for i in range(10): #a agrandir
-        try:
-            nig["map"]["scn"][i]["str"]
-        except IndexError:
-            final.write(":END\n")
-            break
-        if a == True:
-            final.write(":NXT\n")
-        final.write(nig["map"]["scn"][i]["str"]+"\n")
+        for ib in range(4):
+            a = True
+            final.write(nig["map"]["mlk"][i][mlk_infor[ib]]+"\n")
         
     final.write("_OBJ\n")
     a = False

@@ -16,6 +16,9 @@ const u16_f MUSICFILE[MUSICFILESIZE] = {MOD_GANIOU, MOD_REIMP, MOD_BAISE, MOD_NU
 int cam_x;
 int cam_y;
 
+int new_x = 384;
+int new_y = 478;
+
 map* curmap;
 obj* player;
 
@@ -91,14 +94,14 @@ int main(int argc, char **argv){
 		u8_f point = updateobj();
 
         if(point != 0){
-			str_link* link_map = curmap->map_link;
-			str_link* link_cin = curmap->cin_link;
+			map_lnk* link_map = curmap->map_link;
 			for(int i = 2; i < point; i++){
 				link_map = link_map->next;
-				link_cin = link_cin->next;
 			}
-			if(strcmp(link_cin->str, ".NOA") != 0){
-				start_cinematic(link_cin->str);
+			new_x = link_map->pl_x;
+			new_y = link_map->pl_y;
+			if(strcmp(link_map->cin, ".NOA") != 0){
+				start_cinematic(link_map->cin);
 				nig = true;
 			}
 			full_load_map(link_map->str);

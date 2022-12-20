@@ -3,6 +3,7 @@ k2bj1/bg/map
 k2bj1/bg/obj
 k2bj1/bg/col
 0
+0
 768
 768
 _SPR
@@ -31,9 +32,9 @@ k2bj1/pal/karaba
 :END
 _MLK
 k2bj2/info.ddjim
-:END
-_SCN
 .NOA
+0
+0
 :END
 _OBJ
 386

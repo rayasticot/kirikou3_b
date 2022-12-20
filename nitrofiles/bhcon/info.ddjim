@@ -3,6 +3,7 @@ bhcon/bg/map
 bhcon/bg/obj
 bhcon/bg/col
 2
+2
 768
 768
 _SPR
@@ -37,9 +38,9 @@ bhcon/pal/npc
 :END
 _MLK
 bjca1/info.ddjim
-:END
-_SCN
 .NOA
+0
+80
 :END
 _OBJ
 384

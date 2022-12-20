@@ -10,6 +10,14 @@ typedef struct sprite{
 	int size_y;
 	struct sprite* next;
 } sprite;
+typedef struct map_lnk{
+	char str[24];
+	char cin[24];
+	int pl_x;
+	int pl_y;
+	bool* cond;
+	struct map_lnk* next;
+} map_lnk;
 typedef struct scene{
 	char bg[24];
 	int sound;
@@ -48,12 +56,12 @@ typedef struct map{
 	char bg_obj[24];
 	//char* bg_mini;
 	char cmap[24];
+	int id;
 	int song;
 	int bgsize_x;
 	int bgsize_y;
 	sprite* firstspr;
-	str_link* map_link;
-	str_link* cin_link;
+	map_lnk* map_link;
     str_link* pal_link;
 	obj* firstobj;
 	//u8_f spritenum;

@@ -19,6 +19,8 @@ u16_f angle[4] = {0, 256, 128, 384};
 int swbuf = 0;
 
 void kirikou_start(obj* kirikou){
+    kirikou->x = new_x;
+    kirikou->y = new_y;
     NF_CreateSprite(1, kirikou->id, kirikou->sprid, kirikou->palid, kirikou->x, kirikou->y);
     NF_CreateSprite(1, 50, kirikou->sprid+1, kirikou->palid, kirikou->x, kirikou->y);
     NF_EnableSpriteRotScale(1, 50, 0, false);

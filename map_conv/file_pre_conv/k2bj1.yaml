@@ -3,6 +3,7 @@ map:
   bg_map: "k2bj1/bg/map"
   bg_obj: "k2bj1/bg/obj"
   cmap: "k2bj1/bg/col"
+  id: "0"
   song: "0"
   bgsize_x: "768"
   bgsize_y: "768"
@@ -25,8 +26,9 @@ map:
     - str: "k2bj1/pal/karaba"
   mlk:
     - str: "k2bj2/info.ddjim"
-  scn:
-    - str: ".NOA"
+      cin: ".NOA"
+      pl_x: "0"
+      pl_y: "0"
   obj:
     - x: "386"
       y: "300"

@@ -22,8 +22,7 @@ int num = 0;
 map m_map;
 sprite m_spr[16];
 str_link m_pal[16];
-str_link m_mlk[10];
-str_link m_scn[10];
+map_lnk m_mlk[10];
 obj m_obj[48];
 scene m_cin[16];
 
@@ -40,15 +39,15 @@ static void charsetvalue(char (*dest)[24]){
 }
 
 static void intsetvalue(int* dest){
-    if(strcmp(buf, ".NOA") != 0){
+    //if(strcmp(buf, ".NOA") != 0){
         *dest = atoi(buf);
-    }
+    //}
 }
 
 static void u8setvalue(u8_f* dest){
-    if(strcmp(buf, ".NOA") != 0){
+    //if(strcmp(buf, ".NOA") != 0){
         *dest = atoi(buf);
-    }
+    //}
 }
 
 static void sprload(){
@@ -83,6 +82,12 @@ static void mlkload(){
     readnextline();
     charsetvalue(&m_mlk[num].str);
     readnextline();
+    charsetvalue(&m_mlk[num].cin);
+    readnextline();
+    intsetvalue(&m_mlk[num].pl_x);
+    readnextline();
+    intsetvalue(&m_mlk[num].pl_y);
+    readnextline();
     if(strcmp(buf, ":END") != 0){
         m_mlk[num].next = &m_mlk[num+1];
         num++;
@@ -91,7 +96,7 @@ static void mlkload(){
     m_mlk[num].next = NULL;
 }
 
-static void scnload(){
+/*static void scnload(){
     readnextline();
     charsetvalue(&m_scn[num].str);
     readnextline();
@@ -101,7 +106,7 @@ static void scnload(){
         scnload();
     }
     m_scn[num].next = NULL;
-}
+}*/
 
 static void objload(){
     readnextline();
@@ -160,6 +165,8 @@ static void mapload(){
     readnextline();
     charsetvalue(&m_map.cmap);
     readnextline();
+    intsetvalue(&m_map.id);
+    readnextline();
     intsetvalue(&m_map.song);
     readnextline();
     intsetvalue(&m_map.bgsize_x);
@@ -181,11 +188,11 @@ static void mapload(){
     if(strcmp(buf, "_MLK") != 0) crashgame("ERREUR 231");
     else mlkload();
     num = 0;
-    readnextline();
+    /*readnextline();
     m_map.cin_link = &m_scn[0];
     if(strcmp(buf, "_SCN") != 0) crashgame("ERREUR 232");
     else scnload();
-    num = 0;
+    num = 0;*/
     readnextline();
     m_map.firstobj = &m_obj[0];
     if(strcmp(buf, "_OBJ") != 0) crashgame("ERREUR 233");

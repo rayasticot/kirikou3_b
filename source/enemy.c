@@ -33,7 +33,7 @@ static bool swordcollision(obj* objbuf){
         if(checkCollision(objbuf->x, objbuf->y, 16, 8, player->x+sw_x, player->y+sw_y, 16, 4) == true){
             if(sdir == 0) objbuf->spe_x = 6;
             else objbuf->spe_x = -6;
-            objbuf->life--;
+            if(objbuf->life > 0) objbuf->life--;
             return true;
         }
     }
@@ -41,7 +41,7 @@ static bool swordcollision(obj* objbuf){
         if(checkCollision(objbuf->x, objbuf->y, 16, 8, player->x+sw_x, player->y+sw_y, 4, 16) == true){
             if(sdir == 2) objbuf->spe_y = 6;
             else objbuf->spe_y = -6;
-            objbuf->life--;
+            if(objbuf->life > 0) objbuf->life--;
             return true;
         }
     }
@@ -59,9 +59,11 @@ static void enemy_update_action(obj* objbuf){
 
     objbuf->acc_x = 0;
     objbuf->acc_y = 0;
-    
-    if(checkCollision(objbuf->x, objbuf->y, 16, 8, player->x, player->y, 16, 32) == true){
-        gameover();
+
+    if(objbuf->life > 0){ 
+        if(checkCollision(objbuf->x, objbuf->y, 16, 8, player->x, player->y, 16, 32) == true){
+            gameover();
+        }
     }
 
     sw_x = 0;
@@ -96,7 +98,7 @@ static void enemy_update_action(obj* objbuf){
     switch(objbuf->state){
         case 0:
             if(NF_GetTile(0, objbuf->x+17, objbuf->y) != 1 && NF_GetTile(0, objbuf->x+17, objbuf->y+8) != 1){
-                objbuf->acc_x = 1;
+                if(objbuf->life > 0) objbuf->acc_x = 1;
             }
             else{
                 objbuf->state = 1;
@@ -106,7 +108,7 @@ static void enemy_update_action(obj* objbuf){
             break;
         case 1:
             if(NF_GetTile(0, objbuf->x-1, objbuf->y) != 1 && NF_GetTile(0, objbuf->x-1, objbuf->y+8) != 1){
-                objbuf->acc_x = -1;
+                if(objbuf->life > 0) objbuf->acc_x = -1;
             }
             else{
                 objbuf->state = 0;
@@ -116,7 +118,7 @@ static void enemy_update_action(obj* objbuf){
             break;
         case 2:
             if(NF_GetTile(0, objbuf->x, objbuf->y+7) != 1 && NF_GetTile(0, objbuf->x+14, objbuf->y+7) != 1){
-                objbuf->acc_y = 1;
+                if(objbuf->life > 0) objbuf->acc_y = 1;
             }
             else{
                 objbuf->state = 3;
@@ -125,7 +127,7 @@ static void enemy_update_action(obj* objbuf){
             break;
         case 3:
             if(NF_GetTile(0, objbuf->x, objbuf->y-1) != 1 && NF_GetTile(0, objbuf->x+14, objbuf->y-1) != 1){
-                objbuf->acc_y = -1;
+                if(objbuf->life > 0) objbuf->acc_y = -1;
             }
             else{
                 objbuf->state = 2;
@@ -147,16 +149,21 @@ static void enemy_update_action(obj* objbuf){
     }
 
     objbuf->tru_x += objbuf->spe_x;
+    if(NF_GetTile(0, objbuf->tru_x, objbuf->tru_y) == 1) objbuf->tru_x -= objbuf->spe_x;
     objbuf->tru_y += objbuf->spe_y;
+    if(NF_GetTile(0, objbuf->tru_x, objbuf->tru_y) == 1) objbuf->tru_y -= objbuf->spe_y;
 
     objbuf->x = objbuf->tru_x;
     objbuf->y = objbuf->tru_y;
 
-    if(objbuf->life == 0) NF_ShowSprite(1, objbuf->id, false);
+    if(objbuf->life <= 0){
+        NF_DeleteSprite(1, objbuf->id);
+        NF_CreateSprite(1, objbuf->id, objbuf->sprid+1, objbuf->palid, objbuf->sprx, objbuf->spry);
+    }
 
     //NF_MoveSprite(1, objbuf->id, objbuf->sprx, objbuf->spry);
 }
 
 void enemy_update(obj* objbuf){
-    if(objbuf->life > 0) enemy_update_action(objbuf);
+    /*if(objbuf->life > 0)*/ enemy_update_action(objbuf);
 }

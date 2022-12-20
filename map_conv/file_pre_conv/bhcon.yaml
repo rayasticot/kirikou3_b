@@ -3,6 +3,7 @@ map:
   bg_map: "bhcon/bg/map"
   bg_obj: "bhcon/bg/obj"
   cmap: "bhcon/bg/col"
+  id: "2"
   song: "2"
   bgsize_x: "768"
   bgsize_y: "768"
@@ -30,8 +31,9 @@ map:
     - str: "bhcon/pal/npc"
   mlk:
     - str: "bjca1/info.ddjim"
-  scn:
-    - str: ".NOA"
+      cin: ".NOA"
+      pl_x: "0"
+      pl_y: "80"
   obj:
     - x: "384"
       y: "478"

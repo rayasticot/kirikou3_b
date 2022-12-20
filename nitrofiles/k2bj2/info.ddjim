@@ -3,6 +3,7 @@ k2bj2/bg/weird
 k2bj2/bg/obj
 k2bj2/bg/col
 1
+1
 768
 768
 _SPR
@@ -25,9 +26,9 @@ k2bj2/pal/leadi
 :END
 _MLK
 bhcon/info.ddjim
-:END
-_SCN
 cine/ganiou.ddjim
+0
+0
 :END
 _OBJ
 104

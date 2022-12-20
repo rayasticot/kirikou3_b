@@ -54,6 +54,21 @@ void crashgame(char* msg){
 	}
 }
 
+static void start_title(){
+    NF_LoadTiledBg("bg/kirikou3", "title", 256, 256);
+    NF_CreateTiledBg(0, 2, "title");
+    mmLoad(MUSICFILE[2]);
+    mmStart(MUSICFILE[2], MM_PLAY_ONCE);
+    while(!(KEY_A & keysDown())){
+        swiWaitForVBlank();
+		scanKeys();
+    }
+    NF_DeleteTiledBg(0, 2);
+    mmStop();
+    NF_UnloadTiledBg("title");
+    mmUnload(MUSICFILE[2]);
+}
+
 //#include "teststruct.h"
 #include "vars.h"
 #include "functions.h"
@@ -77,6 +92,8 @@ int main(int argc, char **argv){
 
 	/*NF_LoadTiledBg("bg/pli", "plui", 256, 256);
   	NF_CreateTiledBg(1, 1, "plui");*/
+
+	start_title();
 
 	full_load_map("k2bj1/info.ddjim");
 
